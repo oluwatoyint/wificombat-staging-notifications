@@ -1,7 +1,2 @@
-[build]
-builder = "NIXPACKS"
-
 [deploy]
-startCommand = "node dist/index.js"
-healthcheckPath = "/"
-healthcheckTimeout = 60
+startCommand = "npm run build && node dist/index.js"
