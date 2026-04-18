@@ -1,0 +1,48 @@
+FROM node:18-slim AS builder
+
+WORKDIR /app
+
+COPY package.json .
+
+RUN npm i -f
+
+RUN npm install -g typescript
+
+COPY . .
+
+USER root
+
+RUN npx tsc --build
+
+# Add secrets as environment variables
+
+ARG PORT
+ARG TOKEN_KEY
+ARG username
+ARG pass
+ARG AWS_ACCESS_KEY_ID
+ARG AWS_SECRET_ACCESS_KEY
+ARG AWS_DEFAULT_REGION
+ARG AWS_REGION
+ARG AWS_BUCKET
+ARG TOKEN_SECRET
+ARG PROJ_ENV
+ARG NODE_ENV
+
+ENV PORT=$PORT \
+    TOKEN_KEY=$TOKEN_KEY \
+    username=$username \
+    pass=$pass \
+    AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
+    AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
+    AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION \
+    AWS_REGION=$AWS_REGION \
+    AWS_BUCKET=$AWS_BUCKET \
+    TOKEN_SECRET=$TOKEN_SECRET \
+    PROJ_ENV=$PROJ_ENV \
+    NODE_ENV=$NODE_ENV
+
+EXPOSE 8000
+
+CMD npm start
+

@@ -1,0 +1,1 @@
+export const writeErrorsToLogs = (error: any): void => console.error(error)
